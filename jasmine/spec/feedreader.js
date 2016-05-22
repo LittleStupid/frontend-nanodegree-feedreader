@@ -11,14 +11,14 @@
 $(function() {
     /* This is our first test suite - a test suite just contains
     * a related set of tests. This suite is all about the RSS
-    * feeds definitions, the allFeeds variable in our application.
+    * feeds definitions, the loadfeed() variable in our application.
     */
     describe('RSS Feeds', function() {
         /* This is our first test - it tests to make sure that the
-         * allFeeds variable has been defined and that it is not
+         * loadfeed() variable has been defined and that it is not
          * empty. Experiment with this before you get started on
          * the rest of this project. What happens when you change
-         * allFeeds in app.js to be an empty array and refresh the
+         * loadfeed() in app.js to be an empty array and refresh the
          * page?
          */
         it('are defined', function() {
@@ -93,12 +93,30 @@ $(function() {
            expect( $('#feed .tpl-entry') ).toBeDefined();
            done();
          });
+      });
 
-    /* TODO: Write a new test suite named "New Feed Selection"
-
+    /* TODO: Write a new test suite named "New Feed Selection"*/
+        describe( "New Feed Selection", function(){
         /* TODO: Write a test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
+         beforeEach( function(done) {
+           loadFeed(0);
+           done();
+         });
+
+         it('test feed changed', function(done) {
+            var title_before = document.querySelectorAll('.feed .entry-link .entry .h2')[0];
+
+            loadFeed( 2, function(done){
+              var title_after = document.querySelectorAll('.feed .entry-link .entry .h2')[0];
+              is_same = ( title_before == title_after );
+              expect(is_same).toBe( false );
+              done();
+            });
+         });
+
        });
+
 }());
